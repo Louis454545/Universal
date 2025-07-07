@@ -17,7 +17,7 @@ import { postVonageDataExchange } from "~/api/requests/auth/vonage/data-exchange
 import Otp from "~/components/otp";
 import MdiLoading from '~icons/mdi/loading'
 import { BeRealError } from "~/api/models/errors";
-import { invoke } from "@tauri-apps/api/core";
+import { invoke } from "@tauri-apps/api/tauri";
 
 import StayRealLogo from "~icons/stayreal/logo";
 import { openUrl } from "@tauri-apps/plugin-opener";
