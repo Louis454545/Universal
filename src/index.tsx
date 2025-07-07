@@ -73,6 +73,14 @@ const routes = [
   {
     path: "/settings/blocked-users",
     component: lazy(() => import("~/views/settings/blocked-users"))
+  },
+  {
+    path: "/settings/balance",
+    component: lazy(() => import("~/views/settings/balance"))
+  },
+  {
+    path: "/settings/balance/history",
+    component: lazy(() => import("~/views/settings/balance-history"))
   }
 ]
 
