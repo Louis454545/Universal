@@ -206,4 +206,87 @@ impl<R: Runtime> InternalApi<R> {
       status: "granted".into(),
     })
   }
+
+  // ---------------------- Balances (Books) Download Feature ----------------------
+
+  pub fn set_balances_settings(&self, payload: crate::models::BalancesSettings) -> crate::Result<()> {
+    let mut preferences = self.get_preferences().unwrap_or_default();
+    preferences.balances_download_folder = Some(payload.folder.clone());
+    preferences.balances_people_ids = payload.people_ids.clone();
+    self.set_preferences(preferences)
+  }
+
+  pub fn get_balances_settings(&self) -> crate::Result<crate::models::BalancesSettings> {
+    let preferences = self.get_preferences().unwrap_or_default();
+
+    Ok(crate::models::BalancesSettings {
+      folder: preferences
+        .balances_download_folder
+        .unwrap_or_else(|| String::from("")),
+      people_ids: preferences.balances_people_ids,
+    })
+  }
+
+  /// Download balances for every configured person and store them in the configured folder.
+  /// For now, we simply create a placeholder JSON file for each person.
+  pub fn download_balances(&self) -> crate::Result<()> {
+    use std::fs;
+    use std::path::Path;
+
+    let preferences = self.get_preferences()?;
+
+    let folder = preferences
+      .balances_download_folder
+      .ok_or(crate::Error::InvalidPathUrl)?;
+
+    // Ensure folder exists.
+    fs::create_dir_all(&folder)?;
+
+    for person_id in preferences.balances_people_ids {
+      let file_name = format!(
+        "{}_{}.json",
+        person_id,
+        SystemTime::now()
+          .duration_since(UNIX_EPOCH)
+          .unwrap()
+          .as_secs()
+      );
+
+      let path = Path::new(&folder).join(file_name);
+
+      let content = format!(
+        "{{\"personId\": \"{}\", \"balance\": \"sample\", \"timestamp\": {}}}",
+        person_id,
+        SystemTime::now()
+          .duration_since(UNIX_EPOCH)
+          .unwrap()
+          .as_secs()
+      );
+
+      fs::write(path, content)?;
+    }
+
+    Ok(())
+  }
+
+  /// List all recorded balance files (filenames only) in the configured folder.
+  pub fn list_balances(&self) -> crate::Result<Vec<String>> {
+    use std::fs;
+
+    let preferences = self.get_preferences()?;
+    let folder = match preferences.balances_download_folder {
+      Some(path) => path,
+      None => return Ok(Vec::new()),
+    };
+
+    let mut result = Vec::new();
+    for entry in fs::read_dir(&folder)? {
+      let entry = entry?;
+      if entry.file_type()?.is_file() {
+        result.push(entry.file_name().to_string_lossy().into_owned());
+      }
+    }
+
+    Ok(result)
+  }
 }
