@@ -1,4 +1,4 @@
-import { Component, For, createSignal, onMount, Show } from "solid-js";
+import { Component, For, createSignal, onMount } from "solid-js";
 import { useNavigate } from "@solidjs/router";
 import { open } from "@tauri-apps/plugin-dialog";
 import { getBalancesSettings, setBalancesSettings, BalancesSettings } from "~/api/requests/balances";

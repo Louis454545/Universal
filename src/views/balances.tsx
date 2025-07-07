@@ -2,11 +2,9 @@ import { Component, For, createResource } from "solid-js";
 import { listBalances, downloadBalances } from "~/api/requests/balances";
 import MdiChevronLeft from '~icons/mdi/chevron-left';
 import MdiDownload from '~icons/mdi/download';
-import { useNavigate } from "@solidjs/router";
 import toast from "solid-toast";
 
 const BalancesViewer: Component = () => {
-  const navigate = useNavigate();
   const [files, { refetch }] = createResource(listBalances);
 
   const handleDownloadNow = async () => {
