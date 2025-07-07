@@ -22,7 +22,12 @@
     "noFallthroughCasesInSwitch": true,
 
     "types": [
-      "unplugin-icons/types/solid"
+      "unplugin-icons/types/solid",
+      "solid-js",
+      "solid-js/jsx-runtime",
+      "@tauri-apps/api",
+      "@tauri-apps/plugin-dialog",
+      "solid-toast"
     ],
 
     "baseUrl": "src",
