@@ -1,5 +1,5 @@
 import { onCleanup, onMount, type FlowComponent } from "solid-js";
-import PullToRefresh from 'pulltorefreshjs';
+import * as PullToRefresh from 'pulltorefreshjs';
 import MdiRefresh from '~icons/mdi/refresh'
 
 const PullableScreen: FlowComponent<{

@@ -12,6 +12,8 @@ import { deletePersonMe, ProfileDeletionAlreadyScheduledError } from "~/api/requ
 import { confirm, message } from '@tauri-apps/plugin-dialog';
 import { getVersion } from '@tauri-apps/api/app';
 import { openUrl } from "@tauri-apps/plugin-opener";
+import MdiDownload from '~icons/mdi/download';
+import MdiBookOpenOutline from '~icons/mdi/book-open-page-variant-outline';
 // import me from "~/stores/me";
 
 const Settings: Component = () => {
@@ -92,6 +94,18 @@ const Settings: Component = () => {
             await auth.logout();
             navigate("/");
           }} />
+        </section>
+
+        <section class="flex flex-col gap-2">
+          <h2 class="uppercase font-bold text-white/50 text-sm mt-6">Balances</h2>
+
+          <Entry title="Balances Settings" icon={<MdiDownload />} onClick={() => {
+            navigate("/settings/balances");
+          }} chevron />
+
+          <Entry title="View Recorded Balances" icon={<MdiBookOpenOutline />} onClick={() => {
+            navigate("/balances");
+          }} chevron />
         </section>
 
         <button type="button" class="mt-6 mb-4 text-red flex items-center font-medium justify-center gap-2 w-full p-4 bg-white/10 rounded-lg"

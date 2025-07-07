@@ -70,3 +70,26 @@ pub(crate) async fn request_permissions<R: Runtime>(
 ) -> crate::Result<NotificationPermissionStatus> {
   app_handle.api().request_permissions()
 }
+
+#[command]
+pub(crate) async fn set_balances_settings<R: Runtime>(
+  app: AppHandle<R>,
+  payload: BalancesSettings,
+) -> crate::Result<()> {
+  app.api().set_balances_settings(payload)
+}
+
+#[command]
+pub(crate) async fn get_balances_settings<R: Runtime>(app: AppHandle<R>) -> crate::Result<BalancesSettings> {
+  app.api().get_balances_settings()
+}
+
+#[command]
+pub(crate) async fn download_balances<R: Runtime>(app: AppHandle<R>) -> crate::Result<()> {
+  app.api().download_balances()
+}
+
+#[command]
+pub(crate) async fn list_balances<R: Runtime>(app: AppHandle<R>) -> crate::Result<Vec<String>> {
+  app.api().list_balances()
+}

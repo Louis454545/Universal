@@ -134,11 +134,11 @@ const UploadView: Component = () => {
 
       if (state.reversed) {
         const image = await captureFromVideo(frontVideo()!, frontVideoPreview()!);
-        setFrontImage(image);
+        setFrontImage(() => image);
       }
       else {
         const image = await captureFromVideo(backVideo()!, backVideoPreview()!);
-        setBackImage(image);
+        setBackImage(() => image);
       }
 
       await updateCameraStream(state.reversed ? "environment" : "user");
@@ -146,11 +146,11 @@ const UploadView: Component = () => {
 
       if (state.reversed) {
         const image = await captureFromVideo(backVideo()!, backVideoPreview()!);
-        setBackImage(image);
+        setBackImage(() => image);
       }
       else {
         const image = await captureFromVideo(frontVideo()!, frontVideoPreview()!);
-        setFrontImage(image);
+        setFrontImage(() => image);
       }
     }
     finally {

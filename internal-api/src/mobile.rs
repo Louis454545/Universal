@@ -73,4 +73,34 @@ impl<R: Runtime> InternalApi<R> {
       .run_mobile_plugin("requestPermissions", ())
       .map_err(Into::into)
   }
+
+  // ---------------------- Balances (Books) Download Feature ----------------------
+
+  pub fn set_balances_settings(&self, payload: crate::models::BalancesSettings) -> crate::Result<()> {
+    self
+      .0
+      .run_mobile_plugin("setBalancesSettings", payload)
+      .map_err(Into::into)
+  }
+
+  pub fn get_balances_settings(&self) -> crate::Result<crate::models::BalancesSettings> {
+    self
+      .0
+      .run_mobile_plugin("getBalancesSettings", ())
+      .map_err(Into::into)
+  }
+
+  pub fn download_balances(&self) -> crate::Result<()> {
+    self
+      .0
+      .run_mobile_plugin("downloadBalances", ())
+      .map_err(Into::into)
+  }
+
+  pub fn list_balances(&self) -> crate::Result<Vec<String>> {
+    self
+      .0
+      .run_mobile_plugin("listBalances", ())
+      .map_err(Into::into)
+  }
 }

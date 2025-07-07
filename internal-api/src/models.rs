@@ -12,6 +12,10 @@ pub struct AuthDetails {
 #[serde(rename_all = "camelCase")]
 pub struct Preferences {
   pub region: String,
+  #[serde(skip_serializing_if = "Option::is_none")]
+  pub balances_download_folder: Option<String>,
+  #[serde(default)]
+  pub balances_people_ids: Vec<String>,
 }
 
 #[derive(Debug, Deserialize, Serialize)]
@@ -46,4 +50,11 @@ pub struct CompressWebpToSizeArgs {
 #[serde(rename_all = "camelCase")]
 pub struct NotificationPermissionStatus {
   pub status: String, // "prompt" | "denied" | "granted"
+}
+
+#[derive(Debug, Clone, Default, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct BalancesSettings {
+  pub folder: String,
+  pub people_ids: Vec<String>,
 }
