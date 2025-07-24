@@ -2,6 +2,7 @@ import { createRoot } from "solid-js";
 import { getFeedsFriends, type GetFeedsFriends } from "~/api/requests/feeds/friends";
 import auth from "./auth";
 import { createStore, reconcile } from "solid-js/store";
+import logger from "./logger";
 
 export default createRoot(() => {
   const STORAGE_KEY = "feeds_friends";
@@ -25,6 +26,9 @@ export default createRoot(() => {
     if (auth.isDemo()) value = structuredClone(value);
 
     _set("value", reconcile(value));
+
+    // Forward the fresh feed to the logger for potential saving.
+    logger.processFeed(value);
   };
 
   const clear = (): void => {

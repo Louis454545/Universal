@@ -12,6 +12,7 @@ import { deletePersonMe, ProfileDeletionAlreadyScheduledError } from "~/api/requ
 import { confirm, message } from '@tauri-apps/plugin-dialog';
 import { getVersion } from '@tauri-apps/api/app';
 import { openUrl } from "@tauri-apps/plugin-opener";
+import MdiDownload from '~icons/mdi/download';
 // import me from "~/stores/me";
 
 const Settings: Component = () => {
@@ -92,6 +93,10 @@ const Settings: Component = () => {
             await auth.logout();
             navigate("/");
           }} />
+
+          <Entry title="BeReal Logger" icon={<MdiDownload />} onClick={() => {
+            navigate("/logger");
+          }} chevron />
         </section>
 
         <button type="button" class="mt-6 mb-4 text-red flex items-center font-medium justify-center gap-2 w-full p-4 bg-white/10 rounded-lg"
