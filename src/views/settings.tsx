@@ -8,6 +8,7 @@ import MdiDelete from '~icons/mdi/delete'
 // import MdiEarth from '~icons/mdi/earth'
 import MdiChevronRight from '~icons/mdi/chevron-right'
 import MdiBlockHelper from '~icons/mdi/block-helper'
+import MdiDownload from '~icons/mdi/download'
 import { deletePersonMe, ProfileDeletionAlreadyScheduledError } from "~/api/requests/person/me";
 import { confirm, message } from '@tauri-apps/plugin-dialog';
 import { getVersion } from '@tauri-apps/api/app';
@@ -50,6 +51,14 @@ const Settings: Component = () => {
 
           <Entry title="Blocked Users" icon={<MdiBlockHelper />} onClick={() => {
             navigate("/settings/blocked-users");
+          }} chevron />
+        </section>
+
+        <section class="flex flex-col gap-2">
+          <h2 class="uppercase font-bold text-white/50 text-sm mt-6">BeReal Logger</h2>
+
+          <Entry title="Manage BeReal Logger" icon={<MdiDownload />} onClick={() => {
+            navigate("/bereal-logger");
           }} chevron />
 
           {/* <Entry title={`Timezone: ${me.get()?.region}`} icon={<MdiEarth />} onClick={() => {

@@ -9,6 +9,8 @@ import { Gesture } from "@use-gesture/vanilla";
 import toast from "solid-toast";
 import MingcuteEmojiFill from '~icons/mingcute/emoji-fill'
 import PostComments from "~/components/feed/comments";
+import SaveButton from "~/components/bereal-logger/save-button";
+import berealLogger from "~/stores/bereal-logger";
 
 const FeedFriendsPost: Component<{
   post: Post
@@ -17,6 +19,11 @@ const FeedFriendsPost: Component<{
    * User ID of the post owner.
    */
   postUserId: string
+  
+  /**
+   * Username of the post owner.
+   */
+  username: string
 }> = (props) => {
   const [useVideo, setVideo] = createSignal<HTMLVideoElement>();
   const [useImage, setImage] = createSignal<HTMLImageElement>();
@@ -28,6 +35,34 @@ const FeedFriendsPost: Component<{
   const primaryURL = () => isReversed() ? props.post.secondary.url : props.post.primary.url;
   const secondaryURL = () => isReversed() ? props.post.primary.url : props.post.secondary.url;
 
+  // Auto-save effect
+  createEffect(() => {
+    const autoSave = async () => {
+      try {
+        const location = props.post.location 
+          ? {
+              latitude: props.post.location.latitude,
+              longitude: props.post.location.longitude,
+            }
+          : undefined;
+
+        await berealLogger.autoSavePostIfEnabled(
+          props.postUserId,
+          props.username,
+          props.post.momentId,
+          props.post.primary.url,
+          props.post.secondary.url,
+          props.post.caption,
+          props.post.takenAt,
+          location
+        );
+      } catch (error) {
+        console.error("Auto-save failed:", error);
+      }
+    };
+
+    autoSave();
+  });
 
   // On mobile, when having pointer down and scrolling
   // doesn't trigger `pointerup`, but `pointercancel` instead.
@@ -237,11 +272,16 @@ const FeedFriendsPost: Component<{
       </div>
 
       <div class="w-fit">
-        <div class="absolute z-30 bottom-2 right-4 transition-opacity"
+        <div class="absolute z-30 bottom-2 right-4 flex gap-2 items-center transition-opacity"
           classList={{
             "opacity-0 pointer-events-none": isFocusing() || isReacting()
           }}
         >
+          <SaveButton 
+            post={props.post} 
+            userId={props.postUserId} 
+            username={props.username} 
+          />
           <button type="button"
             onClick={() => setIsReacting(true)}
           >

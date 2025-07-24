@@ -1,5 +1,7 @@
 use tauri::{window::Color, WebviewUrl, WebviewWindowBuilder};
 
+mod bereal_logger;
+
 #[tauri::command]
 fn navigate(webview_window: tauri::WebviewWindow, url: String) {
   _ = webview_window.navigate(tauri::Url::parse(&url).unwrap());
@@ -106,7 +108,17 @@ pub fn run() {
 
         Ok(())
     })
-    .invoke_handler(tauri::generate_handler![navigate])
+    .invoke_handler(tauri::generate_handler![
+        navigate,
+        bereal_logger::get_bereal_logger_settings,
+        bereal_logger::save_bereal_logger_settings,
+        bereal_logger::select_save_directory,
+        bereal_logger::save_bereal_post,
+        bereal_logger::get_saved_posts,
+        bereal_logger::get_saved_posts_by_user,
+        bereal_logger::delete_saved_post,
+        bereal_logger::get_saved_posts_stats
+    ])
     .run(tauri::generate_context!())
     .expect("error while running tauri application");
 }

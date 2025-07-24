@@ -73,6 +73,10 @@ const routes = [
   {
     path: "/settings/blocked-users",
     component: lazy(() => import("~/views/settings/blocked-users"))
+  },
+  {
+    path: "/bereal-logger",
+    component: lazy(() => import("~/views/bereal-logger"))
   }
 ]
 

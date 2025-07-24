@@ -298,6 +298,7 @@ const FeedFriendsOverview: Component<{
           <FeedFriendsPost
             post={props.overview.posts[0]}
             postUserId={props.overview.user.id}
+            username={props.overview.user.username}
           />
         </div>
 
