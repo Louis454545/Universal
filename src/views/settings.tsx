@@ -8,10 +8,12 @@ import MdiDelete from '~icons/mdi/delete'
 // import MdiEarth from '~icons/mdi/earth'
 import MdiChevronRight from '~icons/mdi/chevron-right'
 import MdiBlockHelper from '~icons/mdi/block-helper'
+import MdiPalette from '~icons/mdi/palette'
 import { deletePersonMe, ProfileDeletionAlreadyScheduledError } from "~/api/requests/person/me";
 import { confirm, message } from '@tauri-apps/plugin-dialog';
 import { getVersion } from '@tauri-apps/api/app';
 import { openUrl } from "@tauri-apps/plugin-opener";
+import ThemeSelector from "~/components/theme-selector";
 // import me from "~/stores/me";
 
 const Settings: Component = () => {
@@ -22,14 +24,14 @@ const Settings: Component = () => {
     <button
       type="button"
       onClick={props.onClick}
-      class="flex items-center w-full px-4 py-3 bg-white/10 rounded-lg"
+      class="flex items-center w-full px-4 py-3 dark:bg-white/10 light:bg-black/10 rounded-lg dark:hover:bg-white/20 light:hover:bg-black/20 transition-colors"
     >
       <div class="flex items-center gap-4">
-        {props.icon}
-        <p class="font-medium">{props.title}</p>
+        <div class="dark:text-white light:text-black">{props.icon}</div>
+        <p class="font-medium dark:text-white light:text-black">{props.title}</p>
       </div>
       <Show when={props.chevron}>
-        <MdiChevronRight class="ml-auto text-xl text-white/50" />
+        <MdiChevronRight class="ml-auto text-xl dark:text-white/50 light:text-black/50" />
       </Show>
     </button>
   );
@@ -38,7 +40,7 @@ const Settings: Component = () => {
     <>
       <header class="pt-[env(safe-area-inset-top)]">
         <nav class="flex items-center justify-between px-4 h-[72px]">
-          <a href="/profile" class="p-2.5 rounded-full ml-[-10px]" aria-label="Back to profile">
+          <a href="/profile" class="p-2.5 rounded-full ml-[-10px] dark:text-white light:text-black" aria-label="Back to profile">
             <MdiChevronLeft class="text-2xl" />
           </a>
         </nav>
@@ -46,7 +48,22 @@ const Settings: Component = () => {
 
       <div class="p-4">
         <section class="flex flex-col gap-2">
-          <h2 class="uppercase font-bold text-white/50 text-sm">Privacy</h2>
+                                             <h2 class="uppercase font-bold dark:text-white/50 light:text-black/50 text-sm">Appearance</h2>
+          
+          <div class="dark:bg-white/10 light:bg-black/10 rounded-lg p-4">
+            <div class="flex items-center gap-4 mb-4">
+              <MdiPalette class="text-xl dark:text-white light:text-black" />
+              <div>
+                <p class="font-medium dark:text-white light:text-black">Theme</p>
+                <p class="text-sm dark:text-white/60 light:text-black/60">Choose your preferred theme</p>
+              </div>
+            </div>
+            <ThemeSelector />
+          </div>
+        </section>
+
+        <section class="flex flex-col gap-2 mt-6">
+                     <h2 class="uppercase font-bold dark:text-white/50 light:text-black/50 text-sm">Privacy</h2>
 
           <Entry title="Blocked Users" icon={<MdiBlockHelper />} onClick={() => {
             navigate("/settings/blocked-users");
@@ -58,7 +75,7 @@ const Settings: Component = () => {
         </section>
 
         <section class="flex flex-col gap-2">
-          <h2 class="uppercase font-bold text-white/50 text-sm mt-6">Other</h2>
+                     <h2 class="uppercase font-bold dark:text-white/50 light:text-black/50 text-sm mt-6">Other</h2>
 
           <Entry title="Report an issue on GitHub" icon={<MdiGithub />} onClick={() => {
             openUrl("https://github.com/StayRealHQ/Universal/issues");
@@ -94,7 +111,7 @@ const Settings: Component = () => {
           }} />
         </section>
 
-        <button type="button" class="mt-6 mb-4 text-red flex items-center font-medium justify-center gap-2 w-full p-4 bg-white/10 rounded-lg"
+        <button type="button" class="mt-6 mb-4 text-red flex items-center font-medium justify-center gap-2 w-full p-4 dark:bg-white/10 light:bg-black/10 rounded-lg dark:hover:bg-white/20 light:hover:bg-black/20 transition-colors"
           onClick={async () => {
             await auth.logout();
             navigate("/");
@@ -103,7 +120,7 @@ const Settings: Component = () => {
           <MdiLogout /> Log Out
         </button>
 
-        <p class="text-center font-medium text-sm text-white/50">Version {version()}</p>
+                 <p class="text-center font-medium text-sm dark:text-white/50 light:text-black/50">Version {version()}</p>
       </div>
     </>
   )

@@ -2,12 +2,13 @@
 import "@unocss/reset/tailwind.css";
 import "virtual:uno.css";
 
-import { lazy } from "solid-js";
+import { lazy, onMount } from "solid-js";
 import { render } from "solid-js/web";
 import { Router } from "@solidjs/router";
 
 import SplashView from "~/views/splash";
 import { Toaster } from "solid-toast";
+import theme from "~/stores/theme";
 
 const routes = [
   {
@@ -76,30 +77,37 @@ const routes = [
   }
 ]
 
-render(() => (
-  <>
-    <Toaster position="top-center"
-      containerStyle={{
-        "margin-top": "env(safe-area-inset-top)",
-      }}
-      toastOptions={{
-        iconTheme: {
-          primary: '#fff',
-          secondary: '#000',
-        },
-        style: {
-          color: "#fff",
-          background: "#000",
-          border: "2px solid #fff",
-          "border-radius": "16px",
-          "box-shadow": "0 0 10px rgba(0,0,0,0.5)"
-        }
-      }}
-    />
+render(() => {
+  // Initialize theme on app startup
+  onMount(() => {
+    theme.initialize();
+  });
 
-    <Router>
-      {/* @ts-expect-error */}
-      {routes}
-    </Router>
-  </>
-), document.getElementById("root") as HTMLDivElement);
+  return (
+    <>
+      <Toaster position="top-center"
+        containerStyle={{
+          "margin-top": "env(safe-area-inset-top)",
+        }}
+        toastOptions={{
+          iconTheme: {
+            primary: '#fff',
+            secondary: '#000',
+          },
+          style: {
+            color: "#fff",
+            background: "#000",
+            border: "2px solid #fff",
+            "border-radius": "16px",
+            "box-shadow": "0 0 10px rgba(0,0,0,0.5)"
+          }
+        }}
+      />
+
+      <Router>
+        {/* @ts-expect-error */}
+        {routes}
+      </Router>
+    </>
+  );
+}, document.getElementById("root") as HTMLDivElement);
