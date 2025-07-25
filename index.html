@@ -20,6 +20,44 @@
       :root {
         touch-action: pan-x pan-y;
         height: 100%;
+        
+        /* Default theme variables (dark) */
+        --color-background: 13 14 18;
+        --color-surface: 20 21 26;
+        --color-surface-variant: 255 255 255;
+        --color-on-background: 255 255 255;
+        --color-on-surface: 255 255 255;
+        --color-on-surface-variant: 255 255 255;
+        --color-primary-50: 240 249 255;
+        --color-primary-100: 224 242 254;
+        --color-primary-200: 186 230 253;
+        --color-primary-300: 125 211 252;
+        --color-primary-400: 56 189 248;
+        --color-primary-500: 14 165 233;
+        --color-primary-600: 2 132 199;
+        --color-primary-700: 3 105 161;
+        --color-primary-800: 7 89 133;
+        --color-primary-900: 12 74 110;
+      }
+
+      /* Light theme */
+      :root.light {
+        --color-background: 255 255 255;
+        --color-surface: 248 250 252;
+        --color-surface-variant: 0 0 0;
+        --color-on-background: 0 0 0;
+        --color-on-surface: 0 0 0;
+        --color-on-surface-variant: 0 0 0;
+      }
+
+      /* Dark theme (explicit) */
+      :root.dark {
+        --color-background: 13 14 18;
+        --color-surface: 20 21 26;
+        --color-surface-variant: 255 255 255;
+        --color-on-background: 255 255 255;
+        --color-on-surface: 255 255 255;
+        --color-on-surface-variant: 255 255 255;
       }
 
       ::-webkit-scrollbar {
@@ -94,7 +132,7 @@
     </script>
   </head>
 
-  <body class="font-sans bg-#0D0E12 text-white select-none overscroll-none h-screen">
+  <body class="font-sans bg-background text-on-background select-none overscroll-none h-screen">
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
 
